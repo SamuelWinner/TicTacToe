@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CodeByWyna TicTacToe Game</title>
+    <style>
+        body {
+            background-color: #E6E6FA; /* Light Purple background */
+            font-family: 'Helvetica Neue', sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            margin: 20px 0;
+            font-family: 'Pacifico', cursive;
+            color: #333;
+            font-size: 36px;
+        }
+
+        .board {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            grid-gap: 5px;
+            margin: 20px auto;
+            max-width: 300px; /* Adjust this for mobile responsiveness */
+        }
+
+        .cell {
+            width: 100px;
+            height: 100px;
+            font-size: 36px;
+            text-align: center;
+            border: 2px solid #000;
+            cursor: pointer;
+            background-color: #fff;
+            color: #333;
+        }
+
+        .cell:hover {
+            background-color: #F0E68C; /* Light Khaki on hover */
+        }
+
+        p {
+            font-family: 'Arial', sans-serif;
+            color: #333;
+        }
+  
+       .footer{
+         margin-top:100px
+         
+       }
+    </style>
+    <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+</head>
+<body>
+    <h1>TicTacToe Game</h1>
+    <div class="board" id="board">
+        <div class="cell" onclick="makeMove(this)"></div>
+        <div class="cell" onclick="makeMove(this)"></div>
+        <div class="cell" onclick="makeMove(this)"></div>
+        <div class="cell" onclick="makeMove(this)"></div>
+        <div class="cell" onclick="makeMove(this)"></div>
+        <div class="cell" onclick="makeMove(this)"></div>
+        <div class="cell" onclick="makeMove(this)"></div>
+        <div class="cell" onclick="makeMove(this)"></div>
+        <div class="cell" onclick="makeMove(this)"></div>
+    </div>
+    <p id="result"></p>
+  <footer class="footer">
+    &copy Designed by <a href="#">codelikwyna</a>
+  </footer>
+
+    <script>
+        let currentPlayer = 'X';
+        let gameOver = false;
+
+        function makeMove(cell) {
+            if (cell.textContent === "" && !gameOver) {
+                cell.textContent = currentPlayer;
+                checkWin();
+                currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+            }
+        }
+
+        function checkWin() {
+            const cells = document.querySelectorAll('.cell');
+            const winningCombinations = [
+                [0, 1, 2],
+                [3, 4, 5],
+                [6, 7, 8],
+                [0, 3, 6],
+                [1, 4, 7],
+                [2, 5, 8],
+                [0, 4, 8],
+                [2, 4, 6]
+            ];
+
+            for (const combination of winningCombinations) {
+                const [a, b, c] = combination;
+                if (cells[a].textContent && cells[a].textContent === cells[b].textContent && cells[a].textContent === cells[c].textContent) {
+                    gameOver = true;
+                    document.getElementById('result').textContent = `${currentPlayer === 'X' ? 'O' : 'X'} lost`;
+                    break;
+                }
+            }
+
+            if (!Array.from(cells).map(cell => cell.textContent).includes('') && !gameOver) {
+                gameOver = true;
+                document.getElementById('result').textContent = `${currentPlayer === 'X' ? 'O' : 'X'} nobody wins`;
+            }
+        }
+    </script>
+</body>
+</html>
